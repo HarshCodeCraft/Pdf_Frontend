@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaCopy, FaEdit, FaTrash, FaFilePdf } from "react-icons/fa";
+import { FaCopy, FaTrash, FaFilePdf } from "react-icons/fa";
 import axios from "axios";
 import { showAlert, AreYouSure } from "../../utils/ShowAlert";
 import { Link } from "react-router-dom";
@@ -13,8 +13,9 @@ const Pdf = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_BASE_URL_API}/pdf/view`
         );
-        setPdfData(response.data.data);
-        console.log(response.data.data);
+        const data = response?.data?.data;
+        setPdfData(Array.isArray(data) ? data : []);
+        console.log(data);
       } catch (err) {
         showAlert(
           "error",
@@ -72,9 +73,9 @@ const Pdf = () => {
                 </tr>
               </thead>
               <tbody>
-                {pdfData.length > 0 ? (
+                {Array.isArray(pdfData) && pdfData.length > 0 ? (
                   pdfData.map((item, index) => (
-                    <tr key={index}>
+                    <tr key={item._id || index}>
                       <td>{index + 1}</td>
                       <td>
                         <div className="py-2 px-2 w-fit rounded bg-light mx-auto">
