@@ -62,7 +62,7 @@ const UserPdfView = () => {
           );
         }
 
-        const fullPdfUrl = `http://localhost:8080/${currentPdf.filePath}`;
+        const fullPdfUrl = `${import.meta.env.VITE_BASE_URL}${currentPdf.filePath}`;
         setPdfFileUrl(fullPdfUrl);
         setLoading(false);
       } catch (err) {
@@ -216,3 +216,4 @@ if (blocked) {
 };
 
 export default UserPdfView;
+

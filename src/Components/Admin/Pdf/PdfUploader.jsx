@@ -16,7 +16,18 @@ const PdfUploader = () => {
       try {
         const formData = new FormData();
         formData.append("pdf", values.pdf);
-        formData.append("expiryTime", values.expiryTime);
+
+        // ✅ Convert expiryTime from local to UTC before appending
+        if (values.expiryTime) {
+          const localDate = new Date(values.expiryTime);
+          const utcDate = new Date(
+            localDate.getTime() - localDate.getTimezoneOffset() * 60000
+          );
+          formData.append("expiryTime", utcDate.toISOString());
+        } else {
+          formData.append("expiryTime", "");
+        }
+
         formData.append("userLimit", values.userLimit);
 
         for (let [key, value] of formData.entries()) {
@@ -109,8 +120,8 @@ const PdfUploader = () => {
             </div>
             <div className="mt-4">
               <button type="submit" className="btn-login font-medium w-100">
-              Upload PDF
-            </button>
+                Upload PDF
+              </button>
             </div>
           </form>
         </div>

@@ -13,12 +13,17 @@ const Pdf = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_BASE_URL_API}/pdf/view`
         );
-        // ✅ Check that response.data.data is an array
         const fetchedData = Array.isArray(response?.data?.data)
           ? response.data.data
           : [];
-        setPdfData(fetchedData);
-        console.log(fetchedData);
+
+        // 🔄 Sort by newest first (assumes each item has a `createdAt` timestamp)
+        const sortedData = [...fetchedData].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        setPdfData(sortedData);
+        console.log(sortedData);
       } catch (err) {
         showAlert(
           "error",
@@ -72,6 +77,7 @@ const Pdf = () => {
                   <th>Sr.no</th>
                   <th>PDF</th>
                   <th>User Limit</th>
+                  <th>Expires at</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -86,6 +92,29 @@ const Pdf = () => {
                         </div>
                       </td>
                       <td>{item.userLimit}</td>
+                      <td>
+                        <div className="small text-white">
+                          {item.expiryTime ? (
+                            <>
+                              {new Date(item.expiryTime).toLocaleDateString(
+                                "en-IN",
+                                {
+                                  timeZone: "Asia/Kolkata",
+                                }
+                              )}
+                              <br />
+                              {new Date(item.expiryTime).toLocaleTimeString(
+                                "en-IN",
+                                {
+                                  timeZone: "Asia/Kolkata",
+                                }
+                              )}
+                            </>
+                          ) : (
+                            "No Expiry"
+                          )}
+                        </div>
+                      </td>
                       <td>
                         <div className="d-flex gap-2 justify-content-center">
                           <button
@@ -121,3 +150,5 @@ const Pdf = () => {
 };
 
 export default Pdf;
+
+
