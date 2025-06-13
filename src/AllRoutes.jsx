@@ -23,14 +23,16 @@ const AllRoutes = () => {
     { path: "/pdf-email/:pdfId", element: <PdfView /> },
     { path: "/pdf-verification", element: <PdfVerification /> },
     // { path: "/pdf-view/:pdfid", element: <UserPdfView /> },
-    { path: "/forgot-password", element: <ForgotPassword /> },
-    { path: "/otp", element: <Otp /> },
-    { path: "/reset-password", element: <ResetPassword /> },
+    // { path: "/otp", element: <Otp /> },
+    // { path: "/reset-password", element: <ResetPassword /> },
   ];
 
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/otp" element={<Otp />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/pdf-view/:pdfid" element={<UserPdfView />} />
       <Route element={<ProtectiveRoutes />}>
         {AllPage.map((route, index) => (

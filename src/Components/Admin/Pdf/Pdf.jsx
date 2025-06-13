@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaCopy, FaEdit, FaTrash, FaFilePdf } from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash, FaFilePdf, FaCopy } from "react-icons/fa";
 import axios from "axios";
 import { showAlert, AreYouSure } from "../../utils/ShowAlert";
 import { Link } from "react-router-dom";
@@ -7,23 +7,15 @@ import { Link } from "react-router-dom";
 const Pdf = () => {
   const [pdfData, setPdfData] = useState([]);
 
+  // Fetch data when component mounts
   useEffect(() => {
     const fetchPdfData = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BASE_URL_API}/pdf/view`
         );
-        const fetchedData = Array.isArray(response?.data?.data)
-          ? response.data.data
-          : [];
-
-        // 🔄 Sort by newest first (assumes each item has a `createdAt` timestamp)
-        const sortedData = [...fetchedData].sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-
-        setPdfData(sortedData);
-        console.log(sortedData);
+        setPdfData(response.data.data);
+        console.log(response.data.data);
       } catch (err) {
         showAlert(
           "error",
@@ -77,7 +69,7 @@ const Pdf = () => {
                   <th>Sr.no</th>
                   <th>PDF</th>
                   <th>User Limit</th>
-                  <th>Expires at</th>
+                  <th>Expiry Date</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -93,37 +85,43 @@ const Pdf = () => {
                       </td>
                       <td>{item.userLimit}</td>
                       <td>
-                        <div className="small text-white">
-                          {item.expiryTime ? (
-                            <>
-                              {new Date(item.expiryTime).toLocaleDateString(
-                                "en-IN",
-                                {
-                                  timeZone: "Asia/Kolkata",
-                                }
-                              )}
-                              <br />
-                              {new Date(item.expiryTime).toLocaleTimeString(
-                                "en-IN",
-                                {
-                                  timeZone: "Asia/Kolkata",
-                                }
-                              )}
-                            </>
-                          ) : (
-                            "No Expiry"
-                          )}
-                        </div>
+                        {new Date(item.expiryTime).toLocaleString("en-IN", {
+                          timeZone: "Asia/Kolkata",
+                          hour12: true, // optional: for AM/PM
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </td>
                       <td>
                         <div className="d-flex gap-2 justify-content-center">
-                          <button
-                            className="btn btn-primary btn-sm"
-                            title="Copy Link"
-                            onClick={() => handleCopyLink(item._id)}
+                          {/* <Link
+                            target="_"
+                            // to={`${import.meta.env.VITE_BASE_URL}${
+                            //   item.filePath
+                            // }`}
+                            // to={`/pdf-email/${item._id}`}
+                            to={`/pdf-view/${item._id}`}
+                            className="btn btn-info btn-sm"
+                            title="View"
                           >
-                            <FaCopy className="text-white" />
+                            <FaEye className="text-white" />
+                          </Link> */}
+                          <button
+                            className="btn btn-sm btn-success"
+                            onClick={() => handleCopyLink(item._id)}
+                            title="Copy Link"
+                          >
+                            <FaCopy />
                           </button>
+                          {/* <button
+                            className="btn btn-warning btn-sm"
+                            title="Edit"
+                          >
+                            <FaEdit className="text-white" />
+                          </button> */}
                           <button
                             className="btn btn-danger btn-sm"
                             title="Delete"
@@ -150,5 +148,3 @@ const Pdf = () => {
 };
 
 export default Pdf;
-
-
