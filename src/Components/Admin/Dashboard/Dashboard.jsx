@@ -41,11 +41,40 @@ const Dashboard = () => {
     (pdf) => pdf.expiryTime && new Date(pdf.expiryTime) <= now
   );
 
-  const handleCopyLink = (id) => {
-    const link = `${window.location.origin}/pdf-view/${id}`;
-    navigator.clipboard.writeText(link);
-    showAlert("success", "Link copied to clipboard");
-  };
+  // const handleCopyLink = (id) => {
+  //   const link = `${window.location.origin}/pdf-view/${id}`;
+  //   navigator.clipboard.writeText(link);
+  //   showAlert("success", "Link copied to clipboard");
+  // };
+
+  // new function to handle copy link
+function fallbackCopy(text) {
+  const input = document.createElement('input');
+  input.value = text;
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand('copy'); // fallback for non-https
+  document.body.removeChild(input);
+}
+
+const handleCopyLink = (id) => {
+  const link = `${window.location.origin}/pdf-view/${id}`;
+
+  if (navigator?.clipboard?.writeText) {
+    navigator.clipboard.writeText(link)
+      .then(() => showAlert("success", "Link copied to clipboard"))
+      .catch(err => {
+        fallbackCopy(link);
+        showAlert("success", "Link copied to clipboard (fallback)");
+      });
+  } else {
+    fallbackCopy(link);
+    showAlert("success", "Link copied to clipboard (fallback)");
+  }
+};
+
+
+  // new fun end 
 
   return (
     <div>

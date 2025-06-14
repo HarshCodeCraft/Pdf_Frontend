@@ -91,7 +91,7 @@ const UserPdfView = () => {
           );
         }
 
-        const fullPdfUrl = `${import.meta.env.VITE_BASE_URL}${
+        const fullPdfUrl = `${import.meta.env.VITE_BASE_URL}public${
           currentPdf.filePath
         }`;
         setPdfFileUrl(fullPdfUrl);
@@ -129,7 +129,7 @@ const UserPdfView = () => {
     const handleBlur = () => {
       setSuspicious(true);
       blurContent();
-      alert("Window focus lost. Access temporarily blocked.");
+      // alert("Window focus lost. Access temporarily blocked.");
     };
 
     const handleFocus = () => {
@@ -138,15 +138,34 @@ const UserPdfView = () => {
     };
 
     const handleKeyDown = (e) => {
-      const blockedKeys = ["F12", "PrintScreen"];
+      const blockedKeys = [
+        "F12",
+        "PrintScreen",
+        "Control",
+        "Alt",
+        "Shift",
+        "Meta",
+        "Escape",
+        "Tab",
+        "CapsLock",
+        "Insert",
+        "Delete",
+        "Home",
+        "End",
+        "PageUp",
+        "PageDown",
+        "window",
+      ];
+
       if (
         blockedKeys.includes(e.key) ||
-        (e.ctrlKey && ["p", "s", "c", "x", "u"].includes(e.key.toLowerCase()))
+        (e.ctrlKey &&
+          ["p", "s", "c", "x", "u", "a", "v"].includes(e.key.toLowerCase()))
       ) {
         e.preventDefault();
         setSuspicious(true);
         blurContent();
-        alert("This key is blocked for security reasons.");
+        // alert("This key is blocked for security reasons.");
       }
     };
 
@@ -154,7 +173,7 @@ const UserPdfView = () => {
       if (e.key === "PrintScreen") {
         setSuspicious(true);
         blurContent();
-        alert("Screenshot attempt detected. Access temporarily blocked.");
+        // alert("Screenshot attempt detected. Access temporarily blocked.");
       }
     };
 
@@ -183,50 +202,40 @@ const UserPdfView = () => {
       window.removeEventListener("contextmenu", handleContextMenu);
       document.removeEventListener("copy", disableCopy);
     };
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="center-center">
-        <div className="sphere sphere-1" />
-        <div className="sphere sphere-2" />
-        <div className="sphere sphere-3" />
-        <div className="glass-card">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold title mb-2">Please Wait</h1>
-            <p className="text-white opacity-80">Loading PDF...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  },
+   []);
 
   if (blocked) {
     return (
       <div className="no-internet-wrap">
         <div className="no-internet-box">
           <img src="/images/Dinosaur.png" alt="Dino" className="dino-img" />
-          <h1 className="no-internet-title">403</h1>
+          <h3 className="no-internet-title">User Limit Exceeded</h3>
+
           <p className="no-internet-tips">
-            Try one of the following:
+            This PDF access Limit Exceeded no longer visible.
+            <br />
+            <strong>Please try one of the following:</strong>
             <ul>
-              <li>Check if the link has expired</li>
-              <li>Request a new link from your admin</li>
-              <li>Make sure the link is typed correctly</li>
+              <li>Contact the admin to request a new access link</li>
+              <li>Ensure you're using the most recent shared link</li>
             </ul>
           </p>
-          <p className="error-code">ERR_LINK_NOT_WORKING</p>
+
+          <p className="error-code">ERR_LINK_EXPIRED</p>
+
           <button
             className="retry-btn"
             onClick={() => window.location.reload()}
           >
-            LOAD PAGE LATER
+            CHECK AGAIN LATER
           </button>
+
           <p className="notify-msg">
-            The access link you've used is no longer available.
+            This link was time-limited and user limited for security reasons.
             <br />
-            Try one of the following :{" "}
-            <span className="cancel-text">Cancel</span>
+            If you believe this is an error, please{" "}
+            <span className="cancel-text">contact support</span>.
           </p>
         </div>
       </div>
@@ -275,9 +284,37 @@ const UserPdfView = () => {
   }
 
   return (
-    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
-      <Viewer fileUrl={pdfFileUrl} />
-    </Worker>
+    <>
+      {/* Your PDF Viewer code here */}
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
+        <Viewer fileUrl={pdfFileUrl} />
+      </Worker>
+
+      {/* Suspicious modal */}
+      {suspicious && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "black",
+            color: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            zIndex: "9999",
+          }}
+        >
+          <h1>Activity Blocked</h1>
+          <p>
+            Your actions were suspicious. Please refresh or contact support.
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 
