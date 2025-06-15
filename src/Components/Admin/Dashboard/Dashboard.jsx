@@ -41,13 +41,37 @@ const Dashboard = () => {
     (pdf) => pdf.expiryTime && new Date(pdf.expiryTime) <= now
   );
 
-  const handleCopyLink = (id) => {
-    const link = `${window.location.origin}/pdf-view/${id}`;
-    navigator.clipboard.writeText(link);
-    showAlert("success", "Link copied to clipboard");
-  };
+  // const handleCopyLink = (id) => {
+  //   const link = `${window.location.origin}/pdf-view/${id}`;
+  //   navigator.clipboard.writeText(link);
+  //   showAlert("success", "Link copied to clipboard");
+  // };
 
-  
+ const handleCopyLink = (id) => {
+  const link = `${window.location.origin}/pdf-view/${id}`;
+
+  if (navigator?.clipboard?.writeText) {
+    navigator.clipboard.writeText(link)
+      .then(() => showAlert("success", "Link copied to clipboard"))
+      .catch((err) => console.error(err)); 
+  } else {
+    // Fallback for non-https
+    const text = document.createElement('input');
+    text.value = link;
+    document.body.appendChild(text);
+    text.select();
+
+    try {
+      document.execCommand('copy'); // Deprecated but fallback
+      showAlert("success", "Link copied to clipboard.");
+    } catch (err) {
+      console.error(err);
+      showAlert("error", "Failed to copy.");
+    }
+    document.body.removeChild(text);
+  }
+};
+
 
   return (
     <div>

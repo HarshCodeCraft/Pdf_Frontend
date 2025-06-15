@@ -95,7 +95,7 @@ const Pdf = () => {
     <div>
       <div className="comman-design">
         <div className="design-header">
-          {/* <h2>PDF Management</h2> */}
+          <h2>PDF Management</h2>
         </div>
         <div className="design-body">
           <div className="table-responsive">
