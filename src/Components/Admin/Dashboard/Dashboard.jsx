@@ -168,7 +168,7 @@ const Dashboard = () => {
                             <td>
                               {item.accessList && item.accessList.length > 0
                                 ? item.accessList.map((entry, i) => (
-                                    <div key={i}>{entry.ip}</div>
+                                    <div key={i}>{entry.deviceId}</div>
                                   ))
                                 : "N/A"}
                             </td>
