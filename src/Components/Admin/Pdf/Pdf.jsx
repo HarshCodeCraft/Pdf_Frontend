@@ -49,7 +49,7 @@ const Pdf = () => {
   };
 
   const handleCopyLink = (id) => {
-    const link = `http://13.232.77.211/pdf-view/${id}`;
+    const link = `https://15.207.16.194/pdf-view/${id}`;
 
     console.log("Trying to copy link:");
     // Try Clipboard API

@@ -1,5 +1,5 @@
-// import React from "react";
-import React, { useEffect } from "react";
+import React from "react";
+// import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { showAlert } from "../../utils/ShowAlert";
@@ -9,17 +9,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const PdfView = () => {
   const { pdfId } = useParams();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userAgent = navigator?.userAgent?.toLowerCase();
-
-    // If your phone's App is meant to set a custom User-Agent (like MyApp),
-    // you can check it here:
-    if (!userAgent?.includes("myapp")) {
-      alert("Please view this PDF in our App.");
-      navigate("/blocked"); // or navigate back to home
-    }
-  }, []);
 
   const formik = useFormik({
     initialValues: {
