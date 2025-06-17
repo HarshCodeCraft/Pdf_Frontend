@@ -14,8 +14,8 @@ const Pdf = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_BASE_URL_API}/pdf/view`
         );
-        setPdfData(response.data.reverse());
-        console.log(response.data);
+        setPdfData(response.data.data.reverse());
+        console.log(response.data.data);
       } catch (err) {
         showAlert(
           "error",
@@ -97,6 +97,7 @@ const Pdf = () => {
       <div className="comman-design">
         <div className="design-header">
           <h2>PDF Management</h2>
+          {/* <h2>PDF Management</h2> */}
         </div>
         <div className="design-body">
           <div className="table-responsive">
