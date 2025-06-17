@@ -107,10 +107,10 @@ const Login = () => {
 
             <div className="d-flex align-items-center justify-content-between py-3">
               <div className="checkbox-container">
-                <input type="checkbox" id="remember" />
-                <label htmlFor="remember" className="text-white cursor-pointer">
+                {/* <input type="checkbox" id="remember" /> */}
+                {/* <label htmlFor="remember" className="text-white cursor-pointer">
                   Remember me
-                </label>
+                </label> */}
               </div>
               <Link to="/forgot-password" className="text-white">
                 Forgot password?
