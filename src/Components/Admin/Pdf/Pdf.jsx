@@ -14,7 +14,8 @@ const Pdf = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_BASE_URL_API}/pdf/view`
         );
-        setPdfData(response.data.data.reverse());
+        setPdfData(response.data.reverse());
+        console.log(response.data);
       } catch (err) {
         showAlert(
           "error",
@@ -49,7 +50,7 @@ const Pdf = () => {
   };
 
   const handleCopyLink = (id) => {
-    const link = `https://15.207.16.194/pdf-view/${id}`;
+    const link = `http://15.207.16.194/pdf-view/${id}`;
 
     console.log("Trying to copy link:");
     // Try Clipboard API
