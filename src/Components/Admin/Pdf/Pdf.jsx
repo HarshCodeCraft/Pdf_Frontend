@@ -49,49 +49,34 @@ const Pdf = () => {
     }
   };
 
-  const handleCopyLink = (id) => {
-    const link = `http://15.207.16.194/pdf-view/${id}`;
+   const handleCopyLink = (id) => {
+      const link = `${window.location.origin}/pdf-view/${id}`;
+      navigator.clipboard.writeText(link);
+      showAlert("success", "Link copied to clipboard");
+    };
+  // function fallbackCopy(text) {
+  //   const textarea = document.createElement("textarea");
+  //   textarea.value = text;
+  //   textarea.setAttribute("readonly", "");
+  //   textarea.style.position = "absolute";
+  //   textarea.style.left = "-9999px";
+  //   document.body.appendChild(textarea);
+  //   textarea.select();
 
-    console.log("Trying to copy link:");
-    // Try Clipboard API
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard
-        .writeText(link)
-        .then(() => {
-          showAlert("success", "Link copied to clipboard");
-        })
-        .catch((err) => {
-          console.warn("Clipboard API failed, using fallback:", err);
-          fallbackCopy(link);
-        });
-    } else {
-      // Use fallback if Clipboard API not available
-      fallbackCopy(link);
-    }
-  };
-  function fallbackCopy(text) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.setAttribute("readonly", "");
-    textarea.style.position = "absolute";
-    textarea.style.left = "-9999px";
-    document.body.appendChild(textarea);
-    textarea.select();
+  //   try {
+  //     const success = document.execCommand("copy");
+  //     if (success) {
+  //       showAlert("success", "Link copied (fallback)");
+  //     } else {
+  //       showAlert("error", "Copy failed (fallback)");
+  //     }
+  //   } catch (err) {
+  //     console.error("Fallback copy failed:", err);
+  //     showAlert("error", "Clipboard not supported");
+  //   }
 
-    try {
-      const success = document.execCommand("copy");
-      if (success) {
-        showAlert("success", "Link copied (fallback)");
-      } else {
-        showAlert("error", "Copy failed (fallback)");
-      }
-    } catch (err) {
-      console.error("Fallback copy failed:", err);
-      showAlert("error", "Clipboard not supported");
-    }
-
-    document.body.removeChild(textarea);
-  }
+  //   document.body.removeChild(textarea);
+  // }
   return (
     <div>
       <div className="comman-design">
