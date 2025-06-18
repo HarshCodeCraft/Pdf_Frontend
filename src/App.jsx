@@ -23,6 +23,8 @@ function App() {
 
   return (
     <>
+    <div className="desktop">
+  
       {isHidden ? (
         <AllRoutes />
       ) : (
@@ -36,6 +38,11 @@ function App() {
           </div>
         </div>
       )}
+      </div>
+      <div className="mobile">
+        {/* Mobile specific content can go here */}
+        This is Mobile Content
+      </div>
     </>
   );
 }
