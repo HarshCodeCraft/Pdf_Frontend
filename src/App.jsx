@@ -40,8 +40,18 @@ function App() {
       )}
       </div>
       <div className="mobile">
-        {/* Mobile specific content can go here */}
-        This is Mobile Content
+        {/* Auto redirect will happen for mobile users */}
+        <p>
+          If the app doesn't open automatically,
+          <br />
+          <a
+            href="https://expo.dev/artifacts/eas/tqAbwhzyxpVBzBLNiLXsFL.apk"
+            className="text-primary"
+            download
+          >
+            click here to download the app
+          </a>
+        </p>
       </div>
     </>
   );
