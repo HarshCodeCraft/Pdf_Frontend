@@ -25,7 +25,7 @@ const AllRoutes = () => {
     // <Route path="/blocked" element={<Blocked />} />,
     { path: "/pdf-verification", element: <PdfVerification /> },
     { path: "/pdf/pdf-app", element: <PdfApp /> },
-    // { path: "/pdf-view/:pdfid", element: <UserPdfView /> },
+    { path: "/pdf-view/:pdfid", element: <UserPdfView /> },
     // { path: "/otp", element: <Otp /> },
     // { path: "/reset-password", element: <ResetPassword /> },
   ];
