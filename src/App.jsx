@@ -7,6 +7,7 @@ function App() {
   const location = useLocation();
 
   const hideLayoutRoutes = [
+    "/pdf/pdf-app",
     "/login",
     "/404",
     "/forgot-password",
@@ -14,7 +15,7 @@ function App() {
     "/reset-password",
     "/pdf-email",
     "/pdf-verification",
-    "/pdf-view"
+    "/pdf-view",
   ];
 
   const isHidden = hideLayoutRoutes.some((route) =>

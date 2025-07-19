@@ -91,6 +91,7 @@ const Pdf = () => {
                 <tr>
                   <th>Sr.no</th>
                   <th>PDF</th>
+                  <th>PDF Name</th>
                   <th>User Limit</th>
                   <th>Expiry Date</th>
                   <th>Action</th>
@@ -106,6 +107,7 @@ const Pdf = () => {
                           <FaFilePdf className="fs-4 text-dark" />
                         </div>
                       </td>
+                      <td>{item.filePath}</td>
                       <td>{item.userLimit}</td>
                       <td>
                         {new Date(item.expiryTime).toLocaleString("en-IN", {
@@ -139,6 +141,12 @@ const Pdf = () => {
                           >
                             <FaCopy />
                           </button>
+                          {/* <Link
+                            to="pdf-app"
+                            className="btn btn-sm btn-success"
+                          >
+                           <FaEye className="text-white" />
+                          </Link> */}
                           {/* <button
                             className="btn btn-warning btn-sm"
                             title="Edit"

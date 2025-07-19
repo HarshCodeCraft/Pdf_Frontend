@@ -10,6 +10,7 @@ import ForgotPassword from "./Components/Auth/ForgotPassword";
 import Otp from "./Components/Auth/Otp";
 import ResetPassword from "./Components/Auth/ResetPassword";
 import ProtectiveRoutes from "./ProtectiveRoutes";
+import PdfApp from "./Components/Admin/Pdf/PdfApp";
 
 const AllRoutes = () => {
   // Define your routes
@@ -23,6 +24,7 @@ const AllRoutes = () => {
     { path: "/pdf-email/:pdfId", element: <PdfView /> },
     // <Route path="/blocked" element={<Blocked />} />,
     { path: "/pdf-verification", element: <PdfVerification /> },
+    { path: "/pdf/pdf-app", element: <PdfApp /> },
     // { path: "/pdf-view/:pdfid", element: <UserPdfView /> },
     // { path: "/otp", element: <Otp /> },
     // { path: "/reset-password", element: <ResetPassword /> },
