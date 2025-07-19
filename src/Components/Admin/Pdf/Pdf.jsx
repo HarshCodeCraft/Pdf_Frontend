@@ -12,7 +12,7 @@ const Pdf = () => {
     const fetchPdfData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL_API}/pdf/details`
+          `${import.meta.env.VITE_BASE_URL_API}/pdf/view`
         );
         setPdfData(response.data.data.reverse());
         console.log(response.data.data);
